@@ -1,0 +1,25 @@
+.message-history{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+}
+
+.client{
+    flex-direction: row-reverse;
+}
+
+.send{
+    font-weight: 500;
+    color: #36454F;
+    padding: 0 0.5rem;
+
+}
+
+.message{
+    border: 2px solid rgba(119, 136, 153,0.3);
+    width:80%;
+    border-radius: 10px;
+    padding: 1rem 1.5rem;
+    background-color: aliceblue;
+}

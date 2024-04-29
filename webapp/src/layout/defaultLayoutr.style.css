@@ -1,0 +1,12 @@
+.default-layout{
+background-color: rgb(231, 243, 255);
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+}
+
+.main{
+    flex: 1;
+    padding: 0.5rem 0.75rem;
+}
+

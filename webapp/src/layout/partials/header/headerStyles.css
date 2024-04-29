@@ -1,0 +1,75 @@
+
+.header{
+    width: 100%;
+    height: 10vh;
+    background-color: rgba(78, 148, 234,1);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    padding:  0 1rem;
+}
+.logo{
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+.nav-bar ul{
+    display: flex;
+    font-weight: 500;
+}
+.nav-bar ul li a{
+    display: block;
+    padding: 10px 20px;
+    border-radius: 15px;
+    margin-left: 30px;
+}
+.nav-bar ul li a:hover{
+    background-color: rgba(146, 195, 254, 0.7);
+}
+.sidebar{
+    display: none;
+}
+
+@media screen and (max-width:750px) {
+    .header{
+        padding: 0 0.8rem;
+    }
+    .nav-bar ul li a{
+        padding: 10px 15px;
+        margin-left: 15px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .nav-bar{
+        display: none;
+    }
+    .sidebar{
+        display:block;
+    }
+    .drawer ul li{
+        font-size: 1.4rem;
+        margin-bottom: 30px;
+    }
+    .drawer ul li a:hover{
+        color: white;
+    }
+  }
+
+  .ant-drawer-header {
+    background-color: rgba(78, 148, 234,0.8);
+    color: white;
+  }
+  .ant-drawer-header-title {
+    flex-direction: row-reverse;
+  }
+  .anticon-close{
+    color:white;
+    font-size: 1.3rem;
+  }
+  
+  .ant-drawer-body {
+    background-color: rgba(78, 148, 234,0.8);
+    color: white;
+  }
