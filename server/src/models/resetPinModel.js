@@ -12,6 +12,11 @@ const resetPinSchema=new Schema({
     email:{
         type:String,
         required:true
+    },
+    addedAt:{
+        type:Date,
+        default:Date.now(),
+        required:true
     }
 })
 

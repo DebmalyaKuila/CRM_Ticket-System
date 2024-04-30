@@ -32,16 +32,36 @@ const send=(emailInfo)=>{
 }
 
 
-const emailProcessor=(email,pin)=>{
-    const emailInfo={
-        from: '"CRM Tickets Company" <gunnar86@ethereal.email>', // sender address
-        to: email, // receiver
-        subject: "Password reset pin", // Subject line
-        text: "Here's your password reset pin "+pin+".This pin will expire in 1 day", // plain text body
-        html: `<p>Here's your password reset pin <b>${pin}</b>.This pin will expire in 1 day</p>`, // html body
-      }
+const emailProcessor=({type,email,pin})=>{
+    let emailInfo
+    switch (type) {
+        case "password-reset":
+             emailInfo={
+                from: '"CRM Tickets Company" <gunnar86@ethereal.email>', // sender address
+                to: email, // receiver
+                subject: "Password reset pin", // Subject line
+                text: "Here's your password reset pin "+pin+".This pin will expire in 1 day", // plain text body
+                html: `<p>Here's your password reset pin <b>${pin}</b>.This pin will expire in 1 day</p>`, // html body
+              }
+        
+              
+            break;
+            case "password-updated":
+                 emailInfo={
+                    from: '"CRM Tickets Company" <gunnar86@ethereal.email>', // sender address
+                    to: email, // receiver
+                    subject: "Password updated", // Subject line
+                    text: "Your password has been succesfully updated", // plain text body
+                    html: `<p>Your password has been succesfully updated</p>`, // html body
+                  }
+            
+            break;
+    
+        default:
+            break;
+    }
 
-      send(emailInfo)
+    send(emailInfo)
 }
 
 module.exports=emailProcessor
