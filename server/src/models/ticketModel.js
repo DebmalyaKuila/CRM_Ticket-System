@@ -41,7 +41,6 @@ ticketSchema.methods.toJSON = function(){
     //convert the mongoose document to an object by using toObject() method of mongoose
     const ticketObject=ticket.toObject()
     //delete password , tokens, version from user object to hide private data of user
-    delete ticketObject.openAt
     delete ticketObject._id
     delete ticketObject.__v
     delete ticketObject.clientId

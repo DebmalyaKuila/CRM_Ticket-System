@@ -53,7 +53,7 @@ router.get("/", userAuthorization, async (req, res) => {
         const userId = req.userId
         const userProfile = await User.findById(userId)
         if (!userProfile) return res.status(404).send({ message: "user not found" })
-        res.send({ userId: userProfile })
+        res.send({ user: userProfile })
     } catch (error) {
         console.log(error);
         res.send(500).send({ message: "internal server error ,please try again later" })

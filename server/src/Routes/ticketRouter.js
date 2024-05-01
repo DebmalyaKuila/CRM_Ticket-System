@@ -9,6 +9,7 @@ router.all("/",(req,res,next)=>{
     next()
 })
 
+//create a new ticket
 router.post("/",auth,async(req,res)=>{
     const {sender,role,subject,description}=req.body
     console.log(req.body);
@@ -25,6 +26,35 @@ router.post("/",auth,async(req,res)=>{
         await newTicket.save();
         if(newTicket._id){
             return  res.status(201).send({ message:"new ticket created",newTicket})
+        }
+        res.status(400).send({message:"something went wrong.Please try again later..."});
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({message:"Internal server error"});
+    }
+})
+
+//get all tickets
+router.get("/",auth,async(req,res)=>{
+
+    try {
+        const tickets = await ticketModel.find({})
+        if(tickets){
+            return  res.status(200).send({tickets})
+        }
+        res.status(400).send({message:"something went wrong.Please try again later..."});
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({message:"Internal server error"});
+    }
+})
+
+//get all tickets created by that individual user
+router.get("/myTickets",auth,async(req,res)=>{
+    try {
+        const tickets = await ticketModel.find({clientId:req.userId})
+        if(tickets){
+            return  res.status(200).send({tickets})
         }
         res.status(400).send({message:"something went wrong.Please try again later..."});
     } catch (error) {
