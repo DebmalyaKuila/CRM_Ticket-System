@@ -1,6 +1,7 @@
 const express=require("express")
 const mongoose=require("mongoose")
 const ticketModel=require("../models/ticketModel")
+const auth=require("../Middlewares/auth")
 const router=express.Router()
 
 router.all("/",(req,res,next)=>{
@@ -8,11 +9,11 @@ router.all("/",(req,res,next)=>{
     next()
 })
 
-router.post("/",async(req,res)=>{
+router.post("/",auth,async(req,res)=>{
     const {sender,role,subject,description}=req.body
-
+    console.log(req.body);
     const ticketObj={
-       clientId: new mongoose.Types.ObjectId('4edd40c86762e0fb12000003'),
+       clientId: req.userId,
         sender,
         role,
         subject,

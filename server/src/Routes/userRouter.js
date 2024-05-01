@@ -1,4 +1,5 @@
 const express = require("express")
+const bcrypt=require("bcrypt")
 const User = require("../models/userModel")
 const { createAccessJWT, createRefreshJWT } = require("../helpers/jwt.helper.js")
 const userAuthorization = require("../Middlewares/auth.js")
@@ -95,11 +96,13 @@ router.patch("/reset-password",updatePasswordValidation, async (req, res) => {
         if (today > expiryDate) {
             return res.send({ message: "Invalid pin" })
         }
+        //hash the new password
+        const newHashedPassword=await bcrypt.hash(newPassword,8)
         //now update the password
         const user = await User.findOneAndUpdate(
             { email}
             ,
-            {"password": newPassword}
+            {"password": newHashedPassword}
             ,
             {new: true})
         if (user._id) {
