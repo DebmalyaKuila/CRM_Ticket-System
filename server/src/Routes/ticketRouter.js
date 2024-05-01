@@ -62,5 +62,19 @@ router.get("/myTickets",auth,async(req,res)=>{
         res.status(500).send({message:"Internal server error"});
     }
 })
+//get a specific ticket
+router.get("/:ticketId",auth,async(req,res)=>{
+    try {
+        const {ticketId}=req.params
+        const ticket = await ticketModel.find({_id:ticketId})
+        if(ticket){
+            return  res.status(200).send({ticket})
+        }
+        res.status(400).send({message:"something went wrong.Please try again later..."});
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({message:"Internal server error"});
+    }
+})
 
 module.exports=router
