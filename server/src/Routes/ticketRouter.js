@@ -49,7 +49,7 @@ router.get("/",auth,async(req,res)=>{
     }
 })
 
-//get all tickets created by that individual user
+//get all tickets created by that individual user(filtering)
 router.get("/myTickets",auth,async(req,res)=>{
     try {
         const tickets = await ticketModel.find({clientId:req.userId})
@@ -75,6 +75,58 @@ router.get("/:ticketId",auth,async(req,res)=>{
         console.log(error);
         res.status(500).send({message:"Internal server error"});
     }
+})
+//update a ticket
+router.patch("/:ticketId",auth,async(req,res)=>{
+    const {ticketId}=req.params
+    const updates = Object.keys(req.body)
+    const updateOperations = ["sender","role","subject","description"]
+    const isValidOperation = updates.every((update) => {
+        return updateOperations.includes(update)
+    })
+    //if some invalid update is being performed or some values in database which are not changable
+    if (!isValidOperation) {
+        return res.status(400).send({ error: "Invalid update !!" })
+    }
+    try {
+        const updateTicket =await ticketModel.findOne({_id:ticketId})
+        updates.forEach((update) => {
+            updateTicket[update] = req.body[update]
+        })
+        await updateTicket.save()
+        res.send({ticket:updateTicket})
+    } catch (error) {
+        console.log(error);
+        res.status(400).send({message:"something went wrong.Please try again later..."})
+    }
+})
+
+//close a ticket(can only be done by admin)
+router.patch("/close-ticket/:ticketId",auth,async(req,res)=>{
+    const {ticketId}=req.params
+    try {
+        const updateTicket =await ticketModel.findOne({_id:ticketId})
+        updateTicket["status"] = "closed"
+        await updateTicket.save()
+        res.send({message:"ticket has been closed"})
+    } catch (error) {
+        console.log(error);
+        res.status(400).send({message:"something went wrong.Please try again later..."})
+    }
+})
+
+//delete a ticket (can only be done by admin)
+router.delete("/:ticketId",auth,async(req,res)=>{
+    try {
+        await ticketModel.findByIdAndDelete(req.params.ticketId)
+        res.send({message:"ticket has been deleted"})
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            reason: "internal server error",
+            message: "our services are currently down"
+        })
+}
 })
 
 module.exports=router
