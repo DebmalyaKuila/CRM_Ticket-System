@@ -1,7 +1,7 @@
 const express=require("express")
-const mongoose=require("mongoose")
 const ticketModel=require("../models/ticketModel")
 const auth=require("../Middlewares/auth")
+const{ createNewTicketValidation} =require("../Middlewares/validation")
 const router=express.Router()
 
 router.all("/",(req,res,next)=>{
@@ -10,7 +10,7 @@ router.all("/",(req,res,next)=>{
 })
 
 //create a new ticket
-router.post("/",auth,async(req,res)=>{
+router.post("/",auth,createNewTicketValidation,async(req,res)=>{
     const {sender,role,subject,description}=req.body
     console.log(req.body);
     const ticketObj={
@@ -80,7 +80,7 @@ router.get("/:ticketId",auth,async(req,res)=>{
 router.patch("/:ticketId",auth,async(req,res)=>{
     const {ticketId}=req.params
     const updates = Object.keys(req.body)
-    const updateOperations = ["sender","role","subject","description"]
+    const updateOperations = ["role","subject","description"]
     const isValidOperation = updates.every((update) => {
         return updateOperations.includes(update)
     })

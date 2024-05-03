@@ -21,7 +21,8 @@ const ticketSchema=new Schema({
         required:true
     },
     description:{
-        type:String
+        type:String,
+        default:""
     },
     status:{
         type:String,
