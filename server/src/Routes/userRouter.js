@@ -5,7 +5,7 @@ const { createAccessJWT, createRefreshJWT } = require("../helpers/jwt.helper.js"
 const userAuthorization = require("../Middlewares/auth.js")
 const resetPinModel = require("../models/resetPinModel.js")
 const emailProcessor = require("../helpers/email.helper.js")
-const {resetPasswordValidation,updatePasswordValidation,createNewUserValidation,loginValidation}=require("../Middlewares/formValidation.js")
+const {resetPasswordValidation,updatePasswordValidation,createNewUserValidation,loginValidation}=require("../Middlewares/validation.js")
 
 const router = express.Router()
 

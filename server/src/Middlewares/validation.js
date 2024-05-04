@@ -2,7 +2,7 @@ const Joi = require('joi')
 
 const email=Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
 const pin=Joi.number().min(100000).max(999999).required()
-const contactNumber=Joi.number().min(100000).max(999999).required()
+const contactNumber=Joi.number().required()
 const password=Joi.string().min(3).max(50).required()
 
 
@@ -55,15 +55,6 @@ const updateTicketValidation= (req,res,next)=>{
     }
     next()
 }
-
-/*
-    "name":"Debmalya Kuila",
-    "role":"Developer",
-    "position":"Intern",
-    "phone":9475221335,
-    "email":"debmalyakuila911@gmail.com",
-    "password":"secret123"
- */
 
 const createNewUserValidation= (req,res,next)=>{
     const schema=Joi.object({
