@@ -76,11 +76,11 @@ router.get("/:ticketId",auth,async(req,res)=>{
         res.status(500).send({message:"Internal server error"});
     }
 })
-//update a ticket
+//update a ticket (only changing the subject and description of ticket is allowed)
 router.patch("/:ticketId",auth,async(req,res)=>{
     const {ticketId}=req.params
     const updates = Object.keys(req.body)
-    const updateOperations = ["role","subject","description"]
+    const updateOperations = ["subject","description"]
     const isValidOperation = updates.every((update) => {
         return updateOperations.includes(update)
     })
