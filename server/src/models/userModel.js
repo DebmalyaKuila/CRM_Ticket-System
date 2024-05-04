@@ -9,14 +9,17 @@ const userSchema=new Schema({
     },
     role:{
         type:String,
-        maxlength:150
+        maxlength:150,
+        default:""
     },
     position:{
         type:String,
-        maxlength:150
+        maxlength:150,
+        default:""
     },
     phone:{
-        type:Number
+        type:Number,
+        default:null
     },
     email:{
         type:String,

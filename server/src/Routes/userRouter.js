@@ -5,15 +5,15 @@ const { createAccessJWT, createRefreshJWT } = require("../helpers/jwt.helper.js"
 const userAuthorization = require("../Middlewares/auth.js")
 const resetPinModel = require("../models/resetPinModel.js")
 const emailProcessor = require("../helpers/email.helper.js")
-const {resetPasswordValidation,updatePasswordValidation}=require("../Middlewares/formValidation.js")
+const {resetPasswordValidation,updatePasswordValidation,createNewUserValidation,loginValidation}=require("../Middlewares/formValidation.js")
 
 const router = express.Router()
 
 router.all("/", (req, res, next) => {
     next()
 })
-
-router.post('/', async (req, res) => {
+//admin creates a new opeartor
+router.post('/',createNewUserValidation, async (req, res) => {
     try {
         const newUser = await new User(req.body)
         await newUser.save();
@@ -25,8 +25,8 @@ router.post('/', async (req, res) => {
         res.status(400).send({ message: "failed to create user" })
     }
 })
-
-router.post('/login', async (req, res) => {
+//operator log in 
+router.post('/login',loginValidation, async (req, res) => {
     const { email, password } = req.body;
     if (!email || !password) {
         return res.status(400).send({ message: "Invalid form data" })
